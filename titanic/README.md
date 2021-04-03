@@ -1,5 +1,7 @@
 # Titanic tutorials
 
+[link](https://www.kaggle.com/c/titanic)
+
 ## environments
 
 ```bash
@@ -8,4 +10,10 @@ conda activate
 conda activate my_kaggle
 pip install kaggle
 pip install numpy matplotlib pandas
+```
+
+- dataset download
+
+```
+kaggle competitions download -c titanic
 ```
