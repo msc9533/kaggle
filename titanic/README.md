@@ -17,3 +17,9 @@ pip install numpy matplotlib pandas
 ```
 kaggle competitions download -c titanic
 ```
+
+- submission
+
+```
+kaggle competitions submit -c titanic -f submission.csv -m "Message"
+```

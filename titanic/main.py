@@ -24,10 +24,10 @@ class passenger():
         self.cabin = ""
         self.embarked = ""
 
-def csv2passengers(filename,is_test = False,gtfile=""):
+def csv2passengers(filename,is_test = False,gt_exist=False,gtfile=""):
     result = []
     csv = pd.read_csv(filename)
-    if is_test:
+    if gt_exist:
         gt_csv = pd.read_csv(gtfile)
         gt_dict = {}
         for p_id,gt in zip(gt_csv['PassengerId'],gt_csv['Survived']):
@@ -36,8 +36,10 @@ def csv2passengers(filename,is_test = False,gtfile=""):
     for i in range(len(csv['PassengerId'])):
         psg = passenger()
         psg.passengerid = csv['PassengerId'][i]
-        if is_test:
+        if is_test and gt_exist:
             psg.survived = gt_dict[psg.passengerid]
+        elif is_test:
+            psg.survived = None
         else:
             psg.survived = int(csv['Survived'][i])
         if psg.survived:
@@ -96,11 +98,19 @@ def read_gt(filename,testset):
         psg = passenger()
         psg.survived = csv['PassengerId'][i] #csv['Survived'][i]
 
+def make_csv(data,filename):
+    with open(filename,'w') as f:
+        f.write('PassengerId,Survived\n')
+        for ps in data:
+            f.write(str(ps.passengerid))
+            f.write(',')
+            f.write(str(int(ps.survived)))
+            f.write('\n')
 
 def test():
-    train = csv2passengers("/home/a/mygit/test_code/titanic/train.csv")
-    test = csv2passengers("/home/a/mygit/test_code/titanic/test.csv",is_test=True,
-                            gtfile="/home/a/mygit/test_code/titanic/gender_submission.csv")
+    train = csv2passengers("titanic/train.csv")
+    test = csv2passengers("titanic/test.csv",is_test=True,gt_exist=True,
+                            gtfile="titanic/gender_submission.csv")
 
     count = 0
     total = len(test)
@@ -116,9 +126,13 @@ def test():
     print(float(correct)/total)
 
 def eval():
-    train = csv2passengers("/home/a/mygit/test_code/titanic/train.csv")
-    test = 
-    pass
+    train = csv2passengers("titanic/train.csv")
+    test = csv2passengers("titanic/test.csv",is_test=True)
+    for ps in test:
+        predict = knn_classifier(train,ps)
+        ps.survived = predict
+    make_csv(test,'titanic/out.csv')
+
 
 if __name__ == "__main__":
     # main()
