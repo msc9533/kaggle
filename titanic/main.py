@@ -116,13 +116,10 @@ def test():
     total = len(test)
     correct = 0
     for ps in test:
-        # if count >= 20:
-            # break
         count += 1
         predict = knn_classifier(train,ps)
         if predict == ps.survived:
             correct += 1
-        # print("pred :",predict, " gt : ", ps.survived)
     print(float(correct)/total)
 
 def eval():
@@ -135,5 +132,4 @@ def eval():
 
 
 if __name__ == "__main__":
-    # main()
     eval()
