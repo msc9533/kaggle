@@ -4,9 +4,10 @@ from math import isnan
 
 def get_residual(a,b):
     result = 0
-    result += abs(a.fare - b.fare)
+    result += abs(a.fare - b.fare) * 10
     result += abs(a.age - b.age)
-    result += abs(a.sex - b.sex) * 30
+    result += abs(a.sex - b.sex) * 50
+    result += abs(a.pclass - b.pclass) * 10
     return result
 
 class passenger():
@@ -117,7 +118,7 @@ def test():
     correct = 0
     for ps in test:
         count += 1
-        predict = knn_classifier(train,ps)
+        predict = knn_classifier(train,ps,k=15)
         if predict == ps.survived:
             correct += 1
     print(float(correct)/total)
@@ -126,10 +127,11 @@ def eval():
     train = csv2passengers("titanic/train.csv")
     test = csv2passengers("titanic/test.csv",is_test=True)
     for ps in test:
-        predict = knn_classifier(train,ps)
+        predict = knn_classifier(train,ps,k=15)
         ps.survived = predict
     make_csv(test,'titanic/out.csv')
 
 
 if __name__ == "__main__":
     eval()
+    # test()

@@ -21,5 +21,5 @@ kaggle competitions download -c titanic
 - submission
 
 ```
-kaggle competitions submit -c titanic -f submission.csv -m "Message"
+kaggle competitions submit -c titanic -f titanic/out.csv -m "Message"
 ```
