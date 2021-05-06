@@ -1,3 +1,5 @@
 titanic/*.csv
 house_price/*.csv
 house_price/*.txt
+*/.ipynb_checkpoints
+.vscode
