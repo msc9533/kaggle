@@ -23,3 +23,7 @@ kaggle competitions download -c titanic
 ```
 kaggle competitions submit -c titanic -f titanic/out.csv -m "Message"
 ```
+
+## TODO
+
+- dnn classifier.
